@@ -2,7 +2,12 @@
 
 [![GoDoc](https://godoc.org/github.com/Gurpartap/storekit-go?status.svg)](https://godoc.org/github.com/Gurpartap/storekit-go)
 
-Use this for verifying App Store receipts. See GoDoc for API response details.
+Use this for verifying App Store receipts.
+
+- [x] Battle proven technology
+- [x] Blockchain free
+
+See [GoDoc](https://godoc.org/github.com/Gurpartap/storekit-go) for detailed API response reference.
 
 ## Usage example (auto-renewing subscriptions)
 
@@ -21,8 +26,8 @@ func main() {
 	// get it from https://AppsToReconnect.apple.com 🤯
 	appStoreSharedSecret = os.GetEnv("APP_STORE_SHARED_SECRET")
 
-	// your user's id
-	userID := "001"
+	// your own userID
+	userID := "12345"
 
 	// input coming from either user device or subscription notifications
 	// webhook
@@ -45,8 +50,9 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 	// (not recommended on production)
 	client := storekit.NewVerificationClient().OnSandboxEnv()
 
-	// respBody is raw bytes of response, useful for storing and future
-	// verification checks. resp is the same parsed and mapped to a struct.
+	// respBody is raw bytes of response, useful for storing, auditing, and
+	// for future verification checks. resp is the same parsed and mapped to a
+	// struct.
 	respBody, resp, err := client.Verify(&storekit.ReceiptRequest{
 		ReceiptData:            receiptData,
 		Password:               appStoreSharedSecret,
@@ -81,7 +87,7 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 	for _, latestReceiptInfo := range resp.LatestReceiptInfo {
 		productID := latestReceiptInfo.ProductIdentifier
 		expiresAtMs := latestReceiptInfo.SubscriptionExpirationDateMs
-		// cancelledAtMs := ...
+		// cancelledAtStr := latestReceiptInfo.CancellationDate
 
 		// defensively check for necessary data ...
 		// ... because StoreKit API responses are sometimes a bit adventurous
@@ -101,7 +107,7 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 			expiresAt,
 		)
 
-		// ✅ save (your user's ID + productID + expiresAt + respBody)
+		// ✅ save or return productID, expiresAt, cancelledAt, respBody
 	}
 }
 
