@@ -23,13 +23,13 @@ import (
 )
 
 func main() {
-	// get it from https://AppsToReconnect.apple.com 🤯
+	// Get it from https://AppsToReconnect.apple.com 🤯
 	appStoreSharedSecret = os.GetEnv("APP_STORE_SHARED_SECRET")
 
-	// your own userID
+	// Your own userID
 	userID := "12345"
 
-	// input coming from either user device or subscription notifications
+	// Input coming from either user device or subscription notifications
 	// webhook
 	receiptData := []byte("...")
 
@@ -40,13 +40,13 @@ func main() {
 }
 
 func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) error {
-	// use .OnProductionEnv() when deploying
+	// Use .OnProductionEnv() when deploying
 	//
-	// the client automatically retries production server upon environment
-	// error, because App Store Reviewer's purchase requests go through the
-	// sandbox server.
+	// storekit-go automatically retries sandbox server upon incompatible
+	// environment error. This is necessary because App Store Reviewer's
+	// purchase requests go through the sandbox server instead of production.
 	//
-	// use .WithoutEnvAutoFix() to disable automatic env switching and retrying
+	// Use .WithoutEnvAutoFix() to disable automatic env switching and retrying
 	// (not recommended on production)
 	client := storekit.NewVerificationClient().OnSandboxEnv()
 
@@ -68,7 +68,7 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 		) // code: permission denied
 	}
 
-	// if receipt does not contain any active subscription info it is probably
+	// If receipt does not contain any active subscription info it is probably
 	// a fraudulent attempt at activating subscription from a jailbroken
 	// device.
 	if len(resp.LatestReceiptInfo) == 0 {
@@ -104,7 +104,7 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 			expiresAt,
 		)
 
-		// ✅ save or return productID, expiresAt, cancelledAt, respBody
+		// ✅ Save or return productID, expiresAt, cancelledAt, respBody
 	}
 }
 
