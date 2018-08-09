@@ -64,10 +64,7 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 
 	if resp.Status != 0 {
 		return errors.New(
-			fmt.Sprintf(
-				"receipt rejected by App Store with status = %d",
-				resp.Status,
-			),
+			fmt.Sprintf("receipt rejected by App Store with status = %d", resp.Status),
 		) // code: permission denied
 	}
 
@@ -90,7 +87,7 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 		// cancelledAtStr := latestReceiptInfo.CancellationDate
 
 		// defensively check for necessary data ...
-		// ... because StoreKit API responses are sometimes a bit adventurous
+		// ... because StoreKit API responses can be a bit adventurous
 		if productID == "" {
 			return errors.New("missing product_id in the latest receipt info") // code: internal error
 		}
