@@ -6,7 +6,7 @@ Use this for verifying App Store receipts. See GoDoc for API response details.
 
 ## Usage example (auto-renewing subscriptions)
 
-```rust
+```go
 package main
 
 import (
@@ -21,12 +21,20 @@ func main() {
 	// get it from https://AppsToReconnect.apple.com 🤯
 	appStoreSharedSecret = os.GetEnv("APP_STORE_SHARED_SECRET")
 
-	userID := "001" // your user's id from your database
+	// your user's id
+	userID := "001"
 
-	// input coming from either user device or
-	// subscription notifications webhook
+	// input coming from either user device or subscription notifications
+	// webhook
 	receiptData := []byte("...")
 
+	err := verifyAndSave(appStoreSharedSecret, userID, receiptData)
+	if err != nil {
+		fmt.Println("could not verify receipt:", err)
+	}
+}
+
+func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) error {
 	// use .OnProductionEnv() when deploying
 	//
 	// the client automatically retries production server upon environment
@@ -45,11 +53,11 @@ func main() {
 		ExcludeOldTransactions: true,
 	})
 	if err != nil {
-		return nil, err // code: internal error
+		return err // code: internal error
 	}
 
 	if resp.Status != 0 {
-		return nil, errors.New(
+		return errors.New(
 			fmt.Sprintf(
 				"receipt rejected by App Store with status = %d",
 				resp.Status,
@@ -62,7 +70,7 @@ func main() {
 	// device.
 	if len(resp.LatestReceiptInfo) == 0 {
 		// keep it 🤫 that we know what's going on
-		return nil, errors.New("unknown error") // code: internal (instead of invalid argument)
+		return errors.New("unknown error") // code: internal (instead of invalid argument)
 	}
 
 	// resp.LatestReceiptInfo works for me...
@@ -78,15 +86,13 @@ func main() {
 		// defensively check for necessary data ...
 		// ... because StoreKit API responses are sometimes a bit adventurous
 		if productID == "" {
-			return nil, errors.New("missing product_id in the latest receipt info") // code: internal error
+			return errors.New("missing product_id in the latest receipt info") // code: internal error
 		}
 		if expiresAtMs == 0 {
-			return nil, errors.New("missing expiry date in latest receipt info") // code: internal error
+			return errors.New("missing expiry date in latest receipt info") // code: internal error
 		}
 
 		expiresAt := time.Unix(0, expiresAtMs*1000000)
-
-		// ✅ save (your user's ID + productID + expiresAt + respBody)
 
 		fmt.Printf(
 			"userID = %s has subscribed for product_id = %s which expires_at = %s",
@@ -94,6 +100,8 @@ func main() {
 			productID,
 			expiresAt,
 		)
+
+		// ✅ save (your user's ID + productID + expiresAt + respBody)
 	}
 }
 
