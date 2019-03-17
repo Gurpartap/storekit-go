@@ -53,7 +53,8 @@ type InAppPurchaseReceipt struct {
 	// lapse). For an automatic renewal that occurs on the expiration date of
 	// the current period, the purchase date is the start date of the next
 	// period, which is identical to the end date of the current period.
-	PurchaseDate string `json:"purchase_date,omitempty"` // time.Time
+	PurchaseDate   string `json:"purchase_date,omitempty"`           // time.Time
+	PurchaseDateMs int64  `json:"purchase_date_ms,string,omitempty"` // time.Time
 
 	// OriginalPurchaseDate is the date of the original transaction for a
 	// transaction that restores a previous transaction.
@@ -63,7 +64,8 @@ type InAppPurchaseReceipt struct {
 	//
 	// In an auto-renewable subscription receipt, this indicates the beginning
 	// of the subscription period, even if the subscription has been renewed.
-	OriginalPurchaseDate string `json:"original_purchase_date,omitempty"` // time.Time
+	OriginalPurchaseDate   string `json:"original_purchase_date,omitempty"`           // time.Time
+	OriginalPurchaseDateMs int64  `json:"original_purchase_date_ms,string,omitempty"` // time.Time
 
 	// SubscriptionExpirationDate is the expiration date for the subscription,
 	// expressed as the number of milliseconds since
