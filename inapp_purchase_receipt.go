@@ -147,7 +147,8 @@ type InAppPurchaseReceipt struct {
 	// Only applicable if the refund was for a non-consumable product, an
 	// auto-renewable subscription, a non-renewing subscription, or for a free
 	// subscription.
-	CancellationDate string `json:"cancellation_date,omitempty"` // time.Time
+	CancellationDate   string `json:"cancellation_date,omitempty"`           // time.Time
+	CancellationDateMs int64  `json:"cancellation_date_ms,string,omitempty"` // time.Time
 
 	// CancellationReason is for a transaction that was cancelled, the reason
 	// for cancellation.
