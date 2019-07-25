@@ -71,7 +71,7 @@ type Receipt struct {
 
 type ReceiptRequest struct {
 	// ReceiptData contains the base64 encoded receipt data.
-	ReceiptData []byte `json:"receipt-data"`
+	ReceiptData string `json:"receipt-data"`
 
 	// Password is your app’s shared secret (a hexadecimal string).
 	//
