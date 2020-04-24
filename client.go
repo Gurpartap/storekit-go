@@ -2,6 +2,7 @@ package storekit
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -51,9 +52,9 @@ func (c *client) WithoutEnvAutoFix() *client {
 	return c
 }
 
-func (c *client) Verify(req *ReceiptRequest) ([]byte, *ReceiptResponse, error) {
+func (c *client) Verify(ctx context.Context, req *ReceiptRequest) ([]byte, *ReceiptResponse, error) {
 post:
-	body, err := c.post(req)
+	body, err := c.post(ctx, req)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -101,10 +102,10 @@ post:
 	return body, resp, nil
 }
 
-func (c *client) post(req *ReceiptRequest) ([]byte, error) {
+func (c *client) post(ctx context.Context, receiptRequest *ReceiptRequest) ([]byte, error) {
 	// Prepare request:
 
-	reqJSON, err := json.Marshal(req)
+	reqJSON, err := json.Marshal(receiptRequest)
 	if err != nil {
 		return nil, errors.Wrap(err, "could not marshal receipt request")
 	}
@@ -112,7 +113,14 @@ func (c *client) post(req *ReceiptRequest) ([]byte, error) {
 	// Dial the App Store server:
 
 	buf := bytes.NewReader(reqJSON)
-	r, err := http.Post(c.verificationURL, "application/json", buf)
+
+	req, err := http.NewRequest("POST", c.verificationURL, buf)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req = req.WithContext(ctx)
+	r, err := http.DefaultClient.Do(req)
 	if err != nil {
 		// TODO: Handle this error (and probably retry at least once):
 		//       Post https://sandbox.itunes.apple.com/verifyReceipt: read tcp 10.1.11.101:36372->17.154.66.159:443: read: connection reset by peer
