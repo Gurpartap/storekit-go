@@ -53,7 +53,8 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 	// respBody is raw bytes of response, useful for storing, auditing, and
 	// for future verification checks. resp is the same parsed and mapped to a
 	// struct.
-	respBody, resp, err := client.Verify(&storekit.ReceiptRequest{
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	respBody, resp, err := client.Verify(ctx, &storekit.ReceiptRequest{
 		ReceiptData:            receiptData,
 		Password:               appStoreSharedSecret,
 		ExcludeOldTransactions: true,
