@@ -19,7 +19,7 @@ type Receipt struct {
 	// SET of in-app purchase receipt attributes
 	// array of in-app purchase receipts
 	//
-	//	In the JSON file, the value of this key is an array containing all
+	// In the JSON file, the value of this key is an array containing all
 	// in-app purchase receipts based on the in-app purchase transactions
 	// present in the input base-64 receipt-data. For receipts containing
 	// auto-renewable subscriptions, check the value of the latest_receipt_info
@@ -28,15 +28,15 @@ type Receipt struct {
 	//	In the ASN.1 file, there are multiple fields that all have type 17,
 	// each of which contains a single in-app purchase receipt.
 	//
-	//	Note: An empty array is a valid receipt.
-	//	The in-app purchase receipt for a consumable product is added to the
+	// 	Note: An empty array is a valid receipt.
+	// 	The in-app purchase receipt for a consumable product is added to the
 	// receipt when the purchase is made. It is kept in the receipt until your
 	// app finishes that transaction. After that point, it is removed from the
 	// receipt the next time the receipt is updated - for example, when the
 	// user makes another purchase or if your app explicitly refreshes the
 	// receipt.
 	//
-	//	The in-app purchase receipt for a non-consumable product,
+	// 	The in-app purchase receipt for a non-consumable product,
 	// auto-renewable subscription, non-renewing subscription, or free
 	// subscription remains in the receipt indefinitely.
 	InAppPurchaseReceipt []InAppPurchaseReceipt `json:"in_app,omitempty"`
@@ -87,7 +87,8 @@ type ReceiptRequest struct {
 }
 
 const (
-	ReceiptResponseStatusOK                             int = 0
+	ReceiptResponseStatusUnknown                        int = -1 // undocumented but -1 happens
+	ReceiptResponseStatusOK                                 = 0
 	ReceiptResponseStatusAppStoreCannotRead                 = 21000
 	ReceiptResponseStatusDataMalformed                      = 21002
 	ReceiptResponseStatusNotAuthenticated                   = 21003
