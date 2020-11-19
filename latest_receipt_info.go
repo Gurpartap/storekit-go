@@ -13,11 +13,11 @@ type LatestReceiptInfo struct {
 	// milliseconds. This field is only present for refunded transactions. Use this
 	// time format for processing dates.
 	// information.
-	CancellationDateMS int64 `json:"cancellation_date_ms,string,omitempty"`
+	CancellationDateMs int64 `json:"cancellation_date_ms,string,omitempty"`
 
 	// The time Apple customer support canceled a transaction, in the Pacific Time
 	// zone. This field is only present for refunded transactions.
-	CancellationDatePST string `json:"cancellation_date_pst,omitempty"`
+	CancellationDatePst string `json:"cancellation_date_pst,omitempty"`
 
 	// The reason for a refunded transaction. When a customer cancels a transaction,
 	// the App Store gives them a refund and provides a value for this key. A value
@@ -33,11 +33,11 @@ type LatestReceiptInfo struct {
 
 	// The time a subscription expires or when it will renew, in UNIX epoch time
 	// format, in milliseconds. Use this time format for processing dates.
-	ExpiresDateMS int64 `json:"expires_date_ms,string,omitempty"`
+	ExpiresDateMs int64 `json:"expires_date_ms,string,omitempty"`
 
 	// The time a subscription expires or when it will renew, in the Pacific Time
 	// zone.
-	ExpiresDatePST string `json:"expires_date_pst,omitempty"`
+	ExpiresDatePst string `json:"expires_date_pst,omitempty"`
 
 	// An indicator of whether an auto-renewable subscription is in the introductory
 	// price period.
@@ -67,22 +67,22 @@ type LatestReceiptInfo struct {
 	// product types and remains the same in all transactions for the same product
 	// ID. This value corresponds to the original transaction’s transactionDate
 	// property in StoreKit.
-	OriginalPurchaseDateMS int64 `json:"original_purchase_date_ms,string,omitempty"`
+	OriginalPurchaseDateMs int64 `json:"original_purchase_date_ms,string,omitempty"`
 
 	// The time of the original app purchase, in the Pacific Time zone.
-	OriginalPurchaseDatePST string `json:"original_purchase_date_pst,omitempty"`
+	OriginalPurchaseDatePst string `json:"original_purchase_date_pst,omitempty"`
 
 	// The transaction identifier of the original purchase.
-	OriginalTransactionID string `json:"original_transaction_id,omitempty"`
+	OriginalTransactionId string `json:"original_transaction_id,omitempty"`
 
 	// The unique identifier of the product purchased. You provide this value when
 	// creating the product in App Store Connect, and it corresponds to the
 	// productIdentifier property of the SKPayment object stored in the transaction's
 	// payment property.
-	ProductID string `json:"product_id,omitempty"`
+	ProductId string `json:"product_id,omitempty"`
 
 	// The identifier of the subscription offer redeemed by the user.
-		PromotionalOfferID string `json:"promotional_offer_id,omitempty"`
+	PromotionalOfferId string `json:"promotional_offer_id,omitempty"`
 
 	// The time the App Store charged the user's account for a purchased or restored
 	// product, or the time the App Store charged the user’s account for a subscription
@@ -95,12 +95,12 @@ type LatestReceiptInfo struct {
 	// time the App Store charged the user’s account for a subscription purchase or
 	// renewal after a lapse, in the UNIX epoch time format, in milliseconds. Use this
 	// time format for processing dates.
-	PurchaseDateMS int64 `json:"purchase_date_ms,string,omitempty"`
+	PurchaseDateMs int64 `json:"purchase_date_ms,string,omitempty"`
 
 	// The time the App Store charged the user's account for a purchased or restored
 	// product, or the time the App Store charged the user’s account for a subscription
 	// purchase or renewal after a lapse, in the Pacific Time zone.
-	PurchaseDatePST string `json:"purchase_date_pst,omitempty"`
+	PurchaseDatePst string `json:"purchase_date_pst,omitempty"`
 
 	// The number of consumable products purchased. This value corresponds to the
 	// quantity property of the SKPayment object stored in the transaction's payment
@@ -114,10 +114,10 @@ type LatestReceiptInfo struct {
 	SubscriptionGroupIdentifier string `json:"subscription_group_identifier,omitempty"`
 
 	// A unique identifier for a transaction such as a purchase, restore, or renewal.
-	TransactionID string `json:"transaction_id,omitempty"`
+	TransactionId string `json:"transaction_id,omitempty"`
 
 	// A unique identifier for purchase events across devices, including
 	// subscription-renewal events. This value is the primary key for identifying
 	// subscription purchases.
-	WebOrderLineItemID string `json:"web_order_line_item_id,omitempty"`
+	WebOrderLineItemId string `json:"web_order_line_item_id,omitempty"`
 }

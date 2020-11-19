@@ -26,20 +26,20 @@ func main() {
 	// Get it from https://AppsToReconnect.apple.com 🤯
 	appStoreSharedSecret = os.GetEnv("APP_STORE_SHARED_SECRET")
 
-	// Your own userID
-	userID := "12345"
+	// Your own userId
+	userId := "12345"
 
 	// Input coming from either user device or subscription notifications
 	// webhook
 	receiptData := []byte("...")
 
-	err := verifyAndSave(appStoreSharedSecret, userID, receiptData)
+	err := verifyAndSave(appStoreSharedSecret, userId, receiptData)
 	if err != nil {
 		fmt.Println("could not verify receipt:", err)
 	}
 }
 
-func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) error {
+func verifyAndSave(appStoreSharedSecret, userId string, receiptData []byte) error {
 	// Use .OnProductionEnv() when deploying
 	//
 	// storekit-go automatically retries sandbox server upon incompatible
@@ -99,8 +99,8 @@ func verifyAndSave(appStoreSharedSecret, userID string, receiptData []byte) erro
 		expiresAt := time.Unix(0, expiresAtMs*1000000)
 
 		fmt.Printf(
-			"userID = %s has subscribed for product_id = %s which expires_at = %s",
-			userID,
+			"userId = %s has subscribed for product_id = %s which expires_at = %s",
+			userId,
 			productID,
 			expiresAt,
 		)

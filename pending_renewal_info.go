@@ -65,7 +65,7 @@ type PendingRenewalInfo struct {
 	// that the customer’s subscription renews. This field is only present if the
 	// user downgrades or crossgrades to a subscription of a different duration for
 	// the subsequent subscription period.
-	AutoRenewProductID string `json:"auto_renew_product_id,omitempty"`
+	AutoRenewProductId string `json:"auto_renew_product_id,omitempty"`
 
 	// The current renewal status for the auto-renewable subscription.
 	AutoRenewStatus AutoRenewStatus `json:"auto_renew_status,string,omitempty"`
@@ -82,11 +82,11 @@ type PendingRenewalInfo struct {
 	// epoch time format, in milliseconds. This key is only present for apps that
 	// have Billing Grace Period enabled and when the user experiences a billing
 	// error at the time of renewal. Use this time format for processing dates.
-	GracePeriodExpiresDateMS string `json:"grace_period_expires_date_ms,omitempty"`
+	GracePeriodExpiresDateMs string `json:"grace_period_expires_date_ms,omitempty"`
 
 	// The time at which the grace period for subscription renewals expires, in the
 	// Pacific Time zone.
-	GracePeriodExpiresDatePST string `json:"grace_period_expires_date_pst,omitempty"`
+	GracePeriodExpiresDatePst string `json:"grace_period_expires_date_pst,omitempty"`
 
 	// A flag that indicates Apple is attempting to renew an expired subscription
 	// automatically. This field is only present if an auto-renewable subscription
@@ -100,7 +100,7 @@ type PendingRenewalInfo struct {
 	OfferCodeRefName string `json:"offer_code_ref_name,omitempty"`
 
 	// The transaction identifier of the original purchase.
-	OriginalTransactionID string `json:"original_transaction_id,omitempty"`
+	OriginalTransactionId string `json:"original_transaction_id,omitempty"`
 
 	// The price consent status for a subscription price increase. This field is
 	// only present if the customer was notified of the price increase. The default
@@ -111,5 +111,5 @@ type PendingRenewalInfo struct {
 	// creating the product in App Store Connect, and it corresponds to the
 	// productIdentifier property of the SKPayment object stored in the
 	// transaction's payment property.
-	ProductID string `json:"product_id,omitempty"`
+	ProductId string `json:"product_id,omitempty"`
 }

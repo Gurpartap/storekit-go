@@ -14,47 +14,47 @@ const (
 	ReceiptResponseStatusUnknown ReceiptResponseStatus = -1
 
 	// Receipt is valid.
-	ReceiptResponseStatusOK = 0
+	ReceiptResponseStatusOK ReceiptResponseStatus = 0
 
 	// The request to the App Store was not made using the HTTP POST request method.
-	ReceiptResponseStatusAppStoreCannotRead = 21000
+	ReceiptResponseStatusAppStoreCannotRead ReceiptResponseStatus = 21000
 
 	// This status code is no longer sent by the App Store.
-	ReceiptResponseStatusNoLongerSent = 21001
+	ReceiptResponseStatusNoLongerSent ReceiptResponseStatus = 21001
 
 	// The data in the receipt-data property was malformed or the service
 	// experienced a temporary issue. Try again.
-	ReceiptResponseStatusDataMalformed = 21002
+	ReceiptResponseStatusDataMalformed ReceiptResponseStatus = 21002
 
 	// The receipt could not be authenticated.
-	ReceiptResponseStatusNotAuthenticated = 21003
+	ReceiptResponseStatusNotAuthenticated ReceiptResponseStatus = 21003
 
 	// The shared secret you provided does not match the shared secret on file for
 	// your account.
-	ReceiptResponseStatusSharedSecretDoesNotMatch = 21004
+	ReceiptResponseStatusSharedSecretDoesNotMatch ReceiptResponseStatus = 21004
 
 	// The receipt server was temporarily unable to provide the receipt. Try again.
-	ReceiptResponseStatusReceiptServerUnavailable = 21005
+	ReceiptResponseStatusReceiptServerUnavailable ReceiptResponseStatus = 21005
 
 	// This receipt is valid but the subscription has expired. When this status code
 	// is returned to your server, the receipt data is also decoded and returned as
 	// part of the response. Only returned for iOS 6-style transaction receipts for
 	// auto-renewable subscriptions.
-	ReceiptResponseStatusValidButSubscriptionExpired = 21006
+	ReceiptResponseStatusValidButSubscriptionExpired ReceiptResponseStatus = 21006
 
 	// This receipt is from the test environment, but it was sent to the production
 	// environment for verification.
-	ReceiptResponseStatusSandboxReceiptSentToProduction = 21007
+	ReceiptResponseStatusSandboxReceiptSentToProduction ReceiptResponseStatus = 21007
 
 	// This receipt is from the production environment, but it was sent to the test
 	// environment for verification.
-	ReceiptResponseStatusProductionReceiptSentToSandbox = 21008
+	ReceiptResponseStatusProductionReceiptSentToSandbox ReceiptResponseStatus = 21008
 
 	// Internal data access error. Try again later.
-	ReceiptResponseStatusBadAccess = 21009
+	ReceiptResponseStatusBadAccess ReceiptResponseStatus = 21009
 
 	// The user account cannot be found or has been deleted.
-	ReceiptResponseStatusCouldNotBeAuthorized = 21010
+	ReceiptResponseStatusCouldNotBeAuthorized ReceiptResponseStatus = 21010
 
 	// Status codes 21100-21199 are various internal data access errors.
 )
