@@ -15,8 +15,10 @@ See [GoDoc](https://godoc.org/github.com/Gurpartap/storekit-go) for detailed API
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/Gurpartap/storekit-go"
@@ -29,8 +31,7 @@ func main() {
 	// Your own userId
 	userId := "12345"
 
-	// Input coming from either user device or subscription notifications
-	// webhook
+	// Input coming from either user device or subscription notifications webhook
 	receiptData := []byte("...")
 
 	err := verifyAndSave(appStoreSharedSecret, userId, receiptData)
@@ -43,16 +44,15 @@ func verifyAndSave(appStoreSharedSecret, userId string, receiptData []byte) erro
 	// Use .OnProductionEnv() when deploying
 	//
 	// storekit-go automatically retries sandbox server upon incompatible
-	// environment error. This is necessary because App Store Reviewer's
-	// purchase requests go through the sandbox server instead of production.
+	// environment error. This is necessary because App Store Reviewer's purchase
+	// requests go through the sandbox server instead of production.
 	//
 	// Use .WithoutEnvAutoFix() to disable automatic env switching and retrying
 	// (not recommended on production)
 	client := storekit.NewVerificationClient().OnSandboxEnv()
 
-	// respBody is raw bytes of response, useful for storing, auditing, and
-	// for future verification checks. resp is the same parsed and mapped to a
-	// struct.
+	// respBody is raw bytes of response, useful for storing, auditing, and for
+	// future verification checks. resp is the same parsed and mapped to a struct.
 	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 	respBody, resp, err := client.Verify(ctx, &storekit.ReceiptRequest{
 		ReceiptData:            receiptData,
@@ -69,26 +69,25 @@ func verifyAndSave(appStoreSharedSecret, userId string, receiptData []byte) erro
 		) // code: permission denied
 	}
 
-	// If receipt does not contain any active subscription info it is probably
-	// a fraudulent attempt at activating subscription from a jailbroken
-	// device.
+	// If receipt does not contain any active subscription info it is probably a
+	// fraudulent attempt at activating subscription from a jailbroken device.
 	if len(resp.LatestReceiptInfo) == 0 {
 		// keep it 🤫 that we know what's going on
 		return errors.New("unknown error") // code: internal (instead of invalid argument)
 	}
 
-	// resp.LatestReceiptInfo works for me...
-	// ... but, alternatively (as Apple devs also recommend) you can loop over
-	// resp.Receipt.InAppPurchaseReceipt, and filter for the receipt with the
-	// highest expiresAtMs to find the appropriate latest subscription
-	// (not shown in this example).
+	// resp.LatestReceiptInfo works for me. but, alternatively (as Apple devs also
+	// recommend) you can loop over resp.Receipt.InAppPurchaseReceipt, and filter
+	// for the receipt with the highest expiresAtMs to find the appropriate latest
+	// subscription (not shown in this example). if you have multiple subscription
+	// groups, look for transactions with expiresAt > time.Now().
 	for _, latestReceiptInfo := range resp.LatestReceiptInfo {
-		productID := latestReceiptInfo.ProductIdentifier
-		expiresAtMs := latestReceiptInfo.SubscriptionExpirationDateMs
+		productID := latestReceiptInfo.ProductId
+		expiresAtMs := latestReceiptInfo.ExpiresDateMs
 		// cancelledAtStr := latestReceiptInfo.CancellationDate
 
-		// defensively check for necessary data ...
-		// ... because StoreKit API responses can be a bit adventurous
+		// defensively check for necessary data, because StoreKit API responses can be a
+		// bit adventurous
 		if productID == "" {
 			return errors.New("missing product_id in the latest receipt info") // code: internal error
 		}
