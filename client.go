@@ -23,8 +23,8 @@ type client struct {
 // NewVerificationClient defaults to production verification URL with auto fix
 // enabled.
 //
-// Auto fix automatically handles the incompatible receipt environment error.
-// It subsequently gets disabled after the first attempt to avoid unexpected
+// Auto fix automatically handles the incompatible receipt environment error. It
+// subsequently gets disabled after the first attempt to avoid unexpected
 // looping.
 func NewVerificationClient() *client {
 	return &client{
@@ -71,9 +71,8 @@ post:
 
 		switch resp.Status {
 		case ReceiptResponseStatusSandboxReceiptSentToProduction:
-			// On a 21007 status, retry the request in the sandbox environment
-			// (only if the current environment is production – to avoid
-			// unexpected loop).
+			// On a 21007 status, retry the request in the sandbox environment (only if the
+			// current environment is production – to avoid unexpected loop).
 			//
 			// These are receipts from Apple review team.
 			if c.isProduction() {
@@ -81,9 +80,8 @@ post:
 				goto post
 			}
 		case ReceiptResponseStatusProductionReceiptSentToSandbox:
-			// On a 21008 status, retry the request in the production
-			// environment (only if the current environment is sandbox – to
-			// avoid unexpected loop).
+			// On a 21008 status, retry the request in the production environment (only if
+			// the current environment is sandbox – to avoid unexpected loop).
 			if c.isSandbox() {
 				c.verificationURL = productionReceiptVerificationURL
 				goto post
