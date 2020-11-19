@@ -48,6 +48,20 @@ type InAppPurchaseReceipt struct {
 	// An indication of whether a subscription is in the free trial period.
 	IsTrialPeriod bool `json:"is_trial_period,string,omitempty"`
 
+	// An indicator that a subscription has been canceled due to an upgrade. This
+	// field is only present for upgrade transactions.
+	//
+	// Although not documented, this field helps maintain compatibility with LatestReceiptInfo
+	IsUpgraded bool `json:"is_upgraded,string,omitempty"`
+
+	// The reference name of a subscription offer that you configured in App Store
+	// Connect. This field is present when a customer redeemed a subscription offer
+	// code. For more information about offer codes, see [Set Up Offer Codes](https://help.apple.com/app-store-connect/#/dev6a098e4b1),
+	// and [Implementing Offer Codes in Your App](https://developer.apple.com/documentation/storekit/in-app_purchase/subscriptions_and_offers/implementing_offer_codes_in_your_app).
+	//
+	// Although not documented, this field helps maintain compatibility with LatestReceiptInfo
+	OfferCodeRefName string `json:"offer_code_ref_name,omitempty"`
+
 	// The time of the original in-app purchase, in a date-time format similar to
 	// ISO 8601.
 	OriginalPurchaseDate string `json:"original_purchase_date,omitempty"`
@@ -102,6 +116,13 @@ type InAppPurchaseReceipt struct {
 	// property. The value is usually “1” unless modified with a mutable payment.
 	// The maximum value is 10.
 	Quantity int `json:"quantity,string,omitempty"`
+
+	// The identifier of the subscription group to which the subscription belongs. The
+	// value for this field is identical to the subscriptionGroupIdentifier property in
+	// SKProduct.
+	//
+	// Although not documented, this field helps maintain compatibility with LatestReceiptInfo
+	SubscriptionGroupIdentifier string `json:"subscription_group_identifier,omitempty"`
 
 	// A unique identifier for a transaction such as a purchase, restore, or
 	// renewal.
