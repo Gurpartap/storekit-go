@@ -27,7 +27,7 @@ type InAppPurchaseReceipt struct {
 	// actual or perceived issue within your app. A value of “0” indicates that the
 	// transaction was canceled for another reason; for example, if the customer
 	// made the purchase accidentally.
-	CancellationReason int `json:"cancellation_reason,string,omitempty"`
+	CancellationReason string `json:"cancellation_reason,omitempty"`
 
 	// The time a subscription expires or when it will renew, in a date-time format
 	// similar to the ISO 8601.
@@ -43,16 +43,16 @@ type InAppPurchaseReceipt struct {
 
 	// An indicator of whether an auto-renewable subscription is in the introductory
 	// price period.
-	IsInIntroOfferPeriod bool `json:"is_in_intro_offer_period,string,omitempty"`
+	IsInIntroOfferPeriod string `json:"is_in_intro_offer_period,omitempty"`
 
 	// An indication of whether a subscription is in the free trial period.
-	IsTrialPeriod bool `json:"is_trial_period,string,omitempty"`
+	IsTrialPeriod string `json:"is_trial_period,omitempty"`
 
 	// An indicator that a subscription has been canceled due to an upgrade. This
 	// field is only present for upgrade transactions.
 	//
 	// Although not documented, this field helps maintain compatibility with LatestReceiptInfo
-	IsUpgraded bool `json:"is_upgraded,string,omitempty"`
+	IsUpgraded string `json:"is_upgraded,omitempty"`
 
 	// The reference name of a subscription offer that you configured in App Store
 	// Connect. This field is present when a customer redeemed a subscription offer
