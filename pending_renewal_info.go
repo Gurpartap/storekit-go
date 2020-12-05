@@ -116,7 +116,7 @@ type PendingRenewalInfo struct {
 	// epoch time format, in milliseconds. This key is only present for apps that
 	// have Billing Grace Period enabled and when the user experiences a billing
 	// error at the time of renewal. Use this time format for processing dates.
-	GracePeriodExpiresDateMs string `json:"grace_period_expires_date_ms,omitempty"`
+	GracePeriodExpiresDateMs int64 `json:"grace_period_expires_date_ms,string,omitempty"`
 
 	// The time at which the grace period for subscription renewals expires, in the
 	// Pacific Time zone.

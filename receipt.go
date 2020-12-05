@@ -34,7 +34,7 @@ type Receipt struct {
 	// Program, in UNIX epoch time format, in milliseconds. If this key is not
 	// present for apps purchased through the Volume Purchase Program, the receipt
 	// does not expire. Use this time format for processing dates.
-	ExpirationDateMs string `json:"expiration_date_ms,omitempty"`
+	ExpirationDateMs int64 `json:"expiration_date_ms,string,omitempty"`
 
 	// The time the receipt expires for apps purchased through the Volume Purchase
 	// Program, in the Pacific Time zone.
@@ -56,7 +56,7 @@ type Receipt struct {
 
 	// The time of the original app purchase, in UNIX epoch time format, in
 	// milliseconds. Use this time format for processing dates.
-	OriginalPurchaseDateMs string `json:"original_purchase_date_ms,omitempty"`
+	OriginalPurchaseDateMs int64 `json:"original_purchase_date_ms,string,omitempty"`
 
 	// The time of the original app purchase, in the Pacific Time zone.
 	OriginalPurchaseDatePst string `json:"original_purchase_date_pst,omitempty"`
@@ -68,7 +68,7 @@ type Receipt struct {
 	// The time the user ordered the app available for pre-order, in UNIX epoch time
 	// format, in milliseconds. This field is only present if the user pre-orders
 	// the app. Use this time format for processing dates.
-	PreorderDateMs string `json:"preorder_date_ms,omitempty"`
+	PreorderDateMs int64 `json:"preorder_date_ms,string,omitempty"`
 
 	// The time the user ordered the app available for pre-order, in the Pacific
 	// Time zone.
@@ -81,7 +81,7 @@ type Receipt struct {
 	// The time the App Store generated the receipt, in UNIX epoch time format, in
 	// milliseconds. Use this time format for processing dates. This value does not
 	// change.
-	ReceiptCreationDateMs string `json:"receipt_creation_date_ms,omitempty"`
+	ReceiptCreationDateMs int64 `json:"receipt_creation_date_ms,string,omitempty"`
 
 	// The time the App Store generated the receipt, in the Pacific Time zone.
 	ReceiptCreationDatePst string `json:"receipt_creation_date_pst,omitempty"`
@@ -98,7 +98,7 @@ type Receipt struct {
 	// The time the request to the verifyReceipt endpoint was processed and the
 	// response was generated, in UNIX epoch time format, in milliseconds. Use this
 	// time format for processing dates.
-	RequestDateMs string `json:"request_date_ms,omitempty"`
+	RequestDateMs int64 `json:"request_date_ms,string,omitempty"`
 
 	// The time the request to the verifyReceipt endpoint was processed and the
 	// response was generated, in the Pacific Time zone.

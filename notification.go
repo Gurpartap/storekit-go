@@ -129,7 +129,7 @@ type Notification struct {
 	// The time at which the user turned on or off the renewal status for an
 	// auto-renewable subscription, in UNIX epoch time format, in milliseconds. Use
 	// this time format to process dates.
-	AutoRenewStatusChangeDateMs string `json:"auto_renew_status_change_date_ms,omitempty"`
+	AutoRenewStatusChangeDateMs int64 `json:"auto_renew_status_change_date_ms,string,omitempty"`
 
 	// The time at which the user turned on or off the renewal status for an
 	// auto-renewable subscription, in the Pacific time zone.
