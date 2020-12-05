@@ -1,6 +1,5 @@
 package storekit
 
-
 // InAppOwnershipType is the relationship of the user with the family-shared
 // purchase to which they have access.
 //
@@ -64,7 +63,7 @@ type LatestReceiptInfo struct {
 	//  - FAMILY_SHARED: The transaction belongs to a family member who
 	// benefits from service.
 	//  - PURCHASED: The transaction belongs to the purchaser.
-	InAppOwnershipType string `json:"in_app_ownership_type,omitempty"`
+	InAppOwnershipType InAppOwnershipType `json:"in_app_ownership_type,omitempty"`
 
 	// An indicator of whether an auto-renewable subscription is in the introductory
 	// price period.
