@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"unicode"
 
 	"github.com/pkg/errors"
 )
@@ -60,7 +61,15 @@ post:
 	}
 
 	resp := &ReceiptResponse{}
-	err = json.Unmarshal(body, resp)
+	err = json.Unmarshal(
+		bytes.Map(func(r rune) rune {
+			if unicode.IsControl(r) {
+				return -1
+			}
+			return r
+		}, body),
+		resp,
+	)
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "could not unmarshal app store response")
 	}
