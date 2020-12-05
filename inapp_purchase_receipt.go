@@ -41,6 +41,14 @@ type InAppPurchaseReceipt struct {
 	// zone.
 	ExpiresDatePst string `json:"expires_date_pst,omitempty"`
 
+	// A value that indicates whether the user is the purchaser of the product, or
+	// is a family member with access to the product through Family Sharing.
+	// Possible Values:
+	//  - FAMILY_SHARED: The transaction belongs to a family member who
+	// benefits from service.
+	//  - PURCHASED: The transaction belongs to the purchaser.
+	InAppOwnershipType string `json:"in_app_ownership_type,omitempty"`
+
 	// An indicator of whether an auto-renewable subscription is in the introductory
 	// price period.
 	IsInIntroOfferPeriod string `json:"is_in_intro_offer_period,omitempty"`

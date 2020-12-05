@@ -1,5 +1,24 @@
 package storekit
 
+
+// InAppOwnershipType is the relationship of the user with the family-shared
+// purchase to which they have access.
+//
+// When family members benefit from a shared subscription, App Store updates
+// their receipt to include the family-shared purchase. Use the value of
+// in_app_ownership_type to understand whether a transaction belongs to the
+// purchaser or a family member who benefits. This field appears in the App
+// Store server notifications unified receipt
+// (unified_receipt.Latest_receipt_info) and in transaction receipts
+// (responseBody.Latest_receipt_info). For more information about Family
+// Sharing, see Supporting Family Sharing in Your App.
+type InAppOwnershipType string
+
+const (
+	InAppOwnershipTypeFamilyShared InAppOwnershipType = "FAMILY_SHARED"
+	InAppOwnershipTypePurchased    InAppOwnershipType = "PURCHASED"
+)
+
 // LatestReceiptInfo is an array that contains all in-app purchase transactions.
 // https://developer.apple.com/documentation/appstorereceipts/responsebody/latest_receipt_info
 type LatestReceiptInfo struct {
@@ -38,6 +57,14 @@ type LatestReceiptInfo struct {
 	// The time a subscription expires or when it will renew, in the Pacific Time
 	// zone.
 	ExpiresDatePst string `json:"expires_date_pst,omitempty"`
+
+	// A value that indicates whether the user is the purchaser of the product, or
+	// is a family member with access to the product through Family Sharing.
+	// Possible Values:
+	//  - FAMILY_SHARED: The transaction belongs to a family member who
+	// benefits from service.
+	//  - PURCHASED: The transaction belongs to the purchaser.
+	InAppOwnershipType string `json:"in_app_ownership_type,omitempty"`
 
 	// An indicator of whether an auto-renewable subscription is in the introductory
 	// price period.
