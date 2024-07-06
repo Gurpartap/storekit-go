@@ -10,7 +10,7 @@ package storekit
 type ReceiptResponseStatus int
 
 const (
-	// Undocumented but occurs
+	// Undocumented but occurs.
 	ReceiptResponseStatusUnknown ReceiptResponseStatus = -1
 
 	// Receipt is valid.

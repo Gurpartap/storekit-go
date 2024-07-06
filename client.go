@@ -4,11 +4,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"fmt"
+	"io"
 	"net/http"
 	"unicode"
-
-	"github.com/pkg/errors"
 )
 
 const (
@@ -71,7 +70,7 @@ post:
 		resp,
 	)
 	if err != nil {
-		return nil, nil, errors.Wrap(err, "could not unmarshal app store response")
+		return nil, nil, fmt.Errorf("could not unmarshal app store response: %w", err)
 	}
 
 	if c.autofixEnvironment {
@@ -114,14 +113,14 @@ func (c *client) post(ctx context.Context, receiptRequest *ReceiptRequest) ([]by
 
 	reqJSON, err := json.Marshal(receiptRequest)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not marshal receipt request")
+		return nil, fmt.Errorf("could not marshal receipt request: %w", err)
 	}
 
 	// Dial the App Store server:
 
 	buf := bytes.NewReader(reqJSON)
 
-	req, err := http.NewRequest("POST", c.verificationURL, buf)
+	req, err := http.NewRequest(http.MethodPost, c.verificationURL, buf)
 	if err != nil {
 		return nil, err
 	}
@@ -131,17 +130,19 @@ func (c *client) post(ctx context.Context, receiptRequest *ReceiptRequest) ([]by
 	if err != nil {
 		// TODO: Handle this error (and probably retry at least once):
 		//       Post https://sandbox.itunes.apple.com/verifyReceipt: read tcp 10.1.11.101:36372->17.154.66.159:443: read: connection reset by peer
-		return nil, errors.Wrap(err, "could not connect to app store server")
+		return nil, fmt.Errorf("could not connect to app store server: %w", err)
 	}
+	defer r.Body.Close()
+
 	if r.StatusCode != http.StatusOK {
-		return nil, errors.New("app store http error (" + r.Status + ")")
+		return nil, fmt.Errorf("app store http error (%s)", r.Status)
 	}
 
 	// Parse response:
 
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		return nil, errors.Wrap(err, "could not read app store response")
+		return nil, fmt.Errorf("could not read app store response: %w", err)
 	}
 
 	return body, nil
